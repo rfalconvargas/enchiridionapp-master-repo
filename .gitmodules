@@ -1,0 +1,6 @@
+[submodule "website"]
+	path = website
+	url = https://github.com/rfalconvargas/enchiridionapp.git
+[submodule "app"]
+	path = app
+	url = https://github.com/rfalconvargas/enchiridion-v2.git

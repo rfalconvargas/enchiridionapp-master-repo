@@ -1,0 +1,20 @@
+{
+  "name": "enchiridionapp-master-repo",
+  "private": true,
+  "description": "Dev umbrella for the Enchiridion website (enchiridionapp) and 3D app (enchiridion-v2), wired as git submodules.",
+  "scripts": {
+    "dev": "concurrently -n web,app -c blue,magenta \"npm:dev:web\" \"npm:dev:app\"",
+    "dev:web": "npm --prefix website run dev",
+    "dev:app": "npm --prefix app run dev",
+    "build": "npm run build:web && npm run build:app",
+    "build:web": "npm --prefix website run build",
+    "build:app": "npm --prefix app run build",
+    "install:web": "npm --prefix website install",
+    "install:app": "npm --prefix app install",
+    "install:all": "npm run install:web && npm run install:app",
+    "sync": "git submodule update --remote --merge"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
