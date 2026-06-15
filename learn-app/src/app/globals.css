@@ -1,5 +1,32 @@
 @import "tailwindcss";
 
+/* Zimula Trial — display font for the cinematic skull hero (ported from the
+   existing enchiridion.ailiur.com landing). */
+@font-face {
+  font-family: "Zimula Trial Reg";
+  src: url("/fonts/ZimulaTrial-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Zimula Trial Med";
+  src: url("/fonts/ZimulaTrial-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Zimula Trial Bd";
+  src: url("/fonts/ZimulaTrial-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Zimula Trial Bd";
+  src: url("/fonts/ZimulaTrial-Black.otf") format("opentype");
+  font-weight: 900;
+  font-display: swap;
+}
+
 /* ============================================================================
    ENCHIRIDION — "Friendly 3D Nature Lab" brand system
    Light-theme-first. Turquoise + mint + leaf green on soft white/sky.

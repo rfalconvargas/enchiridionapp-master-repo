@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { HeroCanvas } from "@/components/landing/HeroCanvas";
 import { WaitlistButton } from "@/components/landing/WaitlistButton";
+import { SkullHero } from "@/components/landing/SkullHero";
 import { SPINOSAURUS_LESSON } from "@/data/lessons";
 
 // The three core product promises (clear, not generic).
@@ -46,31 +47,23 @@ export default function LandingPage() {
   const lessonSteps = SPINOSAURUS_LESSON.lessonSteps.slice(0, 4);
 
   return (
-    <main className="ench-aurora relative min-h-dvh overflow-hidden">
-      {/* Subtle topographic dot texture — soft background detail only */}
-      <div className="ench-dots pointer-events-none absolute inset-0 opacity-70" />
+    <>
+      {/* Cinematic skull hero (preserved from enchiridion.ailiur.com) */}
+      <SkullHero />
 
-      <div className="relative mx-auto flex min-h-dvh max-w-5xl flex-col px-6">
-        {/* Nav */}
-        <header className="flex items-center justify-between py-5">
-          <div className="flex items-center gap-2">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/enchiridion-logo.png"
-              alt="Enchiridion"
-              className="h-9 w-9 rounded-full"
-            />
-            <span className="font-semibold tracking-tight text-ds-text">
-              Enchiridion
+      {/* Continuation: the friendly, app-focused landing */}
+      <main className="ench-aurora relative overflow-hidden">
+        {/* Subtle topographic dot texture — soft background detail only */}
+        <div className="ench-dots pointer-events-none absolute inset-0 opacity-70" />
+
+        <div className="relative mx-auto flex max-w-5xl flex-col px-6 pb-4 pt-12">
+          {/* Bridge from the cinematic hero into the app pitch */}
+          <div className="mb-3 flex items-center gap-2 text-ds-secondary">
+            <span className="h-px w-8 bg-ds-border-strong" />
+            <span className="text-[11px] font-semibold uppercase tracking-[0.2em]">
+              The interactive app
             </span>
           </div>
-          <Link
-            href="/demo"
-            className="ds-focus rounded-[var(--radius-ds)] border border-ds-border-strong px-4 py-2 text-sm text-ds-text transition-colors hover:border-ds-primary hover:text-ds-accent"
-          >
-            Launch demo
-          </Link>
-        </header>
 
         {/* Hero */}
         <section className="grid items-center gap-8 py-8 md:grid-cols-2">
@@ -217,7 +210,8 @@ export default function LandingPage() {
             <WaitlistButton variant="outline" />
           </div>
         </section>
-      </div>
-    </main>
+        </div>
+      </main>
+    </>
   );
 }
