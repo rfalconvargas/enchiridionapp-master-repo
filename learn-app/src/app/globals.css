@@ -1,0 +1,415 @@
+@import "tailwindcss";
+
+/* Zimula Trial — display font for the cinematic skull hero (ported from the
+   existing enchiridion.ailiur.com landing). */
+@font-face {
+  font-family: "Zimula Trial Reg";
+  src: url("/fonts/ZimulaTrial-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Zimula Trial Med";
+  src: url("/fonts/ZimulaTrial-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Zimula Trial Bd";
+  src: url("/fonts/ZimulaTrial-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Zimula Trial Bd";
+  src: url("/fonts/ZimulaTrial-Black.otf") format("opentype");
+  font-weight: 900;
+  font-display: swap;
+}
+
+/* ============================================================================
+   ENCHIRIDION — "Friendly 3D Nature Lab" brand system
+   Light-theme-first. Turquoise + mint + leaf green on soft white/sky.
+   Dark "Deep Time Mode" is an optional secondary theme (.deep-time scope).
+   ========================================================================== */
+
+@theme {
+  /* --- Brand raw palette (use directly: bg-aqua, text-leaf, etc.) -------- */
+  --color-aqua: #20c7c9; /* Enchiridion Aqua — hero */
+  --color-leaf: #8fdc7e; /* Leaf Green */
+  --color-dino: #5bcbc4; /* Dino Cyan */
+  --color-soft-mint: #ddf7e8; /* Soft Mint bg */
+  --color-pale-sky: #e8fbf8; /* Pale Sky bg */
+  --color-fossil: #ffffff; /* Fossil White */
+  --color-bone: #f6f0d8; /* Bone Sand */
+  --color-forest: #063a3a; /* Forest Teal text */
+  --color-muted-teal: #39706f; /* Muted Teal text */
+  --color-graygreen: #729391; /* Soft Gray Green text */
+  --color-glow: #b7ea8c; /* Prehistoric Glow */
+  --color-coral: #ff7a59; /* Discovery Coral */
+  --color-amber: #ffc857; /* Amber Fossil */
+
+  /* --- Semantic tokens (light-first; the whole app reads these) ---------- */
+  --color-ds-primary: #20c7c9; /* Aqua — primary actions / focus */
+  --color-ds-primary-deep: #14a6a8; /* darker aqua — button "lip" / press */
+  --color-ds-secondary: #2e9e6a; /* Leaf-green — secondary emphasis */
+  --color-ds-accent: #0e8f90; /* deep aqua — emphasis text & hover (AA) */
+  --color-ds-on-primary: #063a3a; /* text/icons on primary surfaces (AA) */
+
+  --color-ds-bg: #e8fbf8; /* App background (Pale Sky) */
+  --color-ds-surface: #ffffff; /* Card / panel (Fossil White) */
+  --color-ds-surface-2: #f2fbf8; /* Elevated / hover */
+  --color-ds-surface-3: #e4f6ef; /* Inputs / wells */
+
+  --color-ds-border: #cdebe2; /* Hairlines */
+  --color-ds-border-strong: #a9ded3; /* Hover / emphasis borders */
+
+  --color-ds-text: #063a3a; /* Forest Teal — primary text */
+  --color-ds-muted: #39706f; /* Muted Teal — secondary text (AA) */
+  --color-ds-faint: #729391; /* Soft Gray Green — de-emphasized */
+
+  --color-ds-success: #1f9d5b; /* readable green (Known evidence) */
+  --color-ds-info: #0c8f93; /* deep dino-cyan (Inferred evidence) */
+  --color-ds-warning: #b5780c; /* readable amber (Debated evidence) */
+  --color-ds-danger: #d8492b; /* readable coral */
+
+  /* --- Radii (friendly, rounded) ---------------------------------------- */
+  --radius-ds-sm: 0.625rem;
+  --radius-ds: 1rem;
+  --radius-ds-lg: 1.5rem;
+  --radius-ds-xl: 2rem;
+
+  /* --- Shadows (soft, light, hint of teal) ------------------------------ */
+  --shadow-ds: 0 1px 2px rgba(6, 58, 58, 0.05), 0 6px 18px rgba(6, 58, 58, 0.07);
+  --shadow-ds-glow: 0 0 0 1px rgba(32, 199, 201, 0.18),
+    0 10px 28px rgba(32, 199, 201, 0.18);
+  --shadow-ds-btn: 0 3px 0 0 var(--color-ds-primary-deep),
+    0 6px 16px rgba(6, 58, 58, 0.1);
+
+  /* --- Gradients -------------------------------------------------------- */
+  --gradient-ds-hero: linear-gradient(135deg, #20c7c9 0%, #5bcbc4 52%, #8fdc7e 100%);
+  --gradient-ds-mint: linear-gradient(180deg, #e8fbf8 0%, #ddf7e8 100%);
+  --gradient-ds-sky: linear-gradient(160deg, #ffffff 0%, #e8fbf8 100%);
+  --gradient-ds-sand: linear-gradient(180deg, #ffffff 0%, #f6f0d8 100%);
+
+  /* --- Fonts ------------------------------------------------------------ */
+  --font-display: var(--font-fredoka), ui-rounded, system-ui, sans-serif;
+  --font-body: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-reading: var(--font-atkinson), Georgia, serif;
+}
+
+/* ----------------------------------------------------------------------------
+   Deep Time Mode — optional dark secondary theme. Apply `.deep-time` (or
+   data-theme="deep-time") to <html> to enable. NOT the default.
+---------------------------------------------------------------------------- */
+.deep-time {
+  --color-ds-primary: #2bd3d5;
+  --color-ds-primary-deep: #128e90;
+  --color-ds-secondary: #6fd08c;
+  --color-ds-accent: #58e0e2;
+  --color-ds-on-primary: #042322;
+
+  --color-ds-bg: #051d1c;
+  --color-ds-surface: #0a2a28;
+  --color-ds-surface-2: #0e3331;
+  --color-ds-surface-3: #123b39;
+
+  --color-ds-border: #1c4a47;
+  --color-ds-border-strong: #2a625e;
+
+  --color-ds-text: #e8fbf8;
+  --color-ds-muted: #a7cfcb;
+  --color-ds-faint: #6e938f;
+
+  --color-ds-success: #4fd08a;
+  --color-ds-info: #5be0e2;
+  --color-ds-warning: #ffc857;
+  --color-ds-danger: #ff8a6b;
+
+  --shadow-ds: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-ds-glow: 0 0 0 1px rgba(43, 211, 213, 0.22),
+    0 10px 30px rgba(43, 211, 213, 0.18);
+  --gradient-ds-mint: linear-gradient(180deg, #06201f 0%, #0a2a28 100%);
+  --gradient-ds-sky: linear-gradient(160deg, #0a2a28 0%, #051d1c 100%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--color-ds-bg);
+  color: var(--color-ds-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Playful rounded display font on headings; Manrope everywhere else. */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+/* Dense educational reading sections (opt-in). */
+.reading {
+  font-family: var(--font-reading);
+}
+
+/* ----------------------------------------------------------------------------
+   Brand utilities
+---------------------------------------------------------------------------- */
+.ds-glow {
+  box-shadow: var(--shadow-ds-glow);
+}
+
+/* Soft "lab" dot texture — replaces the old sci-fi grid. */
+.ds-grid-bg {
+  background-color: var(--color-ds-bg);
+  background-image: radial-gradient(
+    circle at center,
+    rgba(32, 199, 201, 0.1) 1px,
+    transparent 1.6px
+  );
+  background-size: 22px 22px;
+}
+
+.ds-gradient-hero {
+  background-image: var(--gradient-ds-hero);
+}
+
+/* Bright aqua/mint "channel art" backdrop for the landing page. */
+.ench-aurora {
+  background-color: var(--color-ds-bg);
+  background-image:
+    radial-gradient(60% 50% at 15% 0%, rgba(143, 220, 126, 0.28), transparent 70%),
+    radial-gradient(55% 45% at 90% 8%, rgba(32, 199, 201, 0.26), transparent 70%),
+    linear-gradient(180deg, #effdf8 0%, #ddf7e8 100%);
+}
+
+.deep-time .ench-aurora {
+  background-color: var(--color-ds-bg);
+  background-image:
+    radial-gradient(60% 50% at 15% 0%, rgba(111, 208, 140, 0.12), transparent 70%),
+    radial-gradient(55% 45% at 90% 8%, rgba(43, 211, 213, 0.14), transparent 70%),
+    linear-gradient(180deg, #0a2a28 0%, #051d1c 100%);
+}
+
+/* Transparent dot texture (overlay only — no background fill). */
+.ench-dots {
+  background-image: radial-gradient(
+    circle at center,
+    rgba(6, 58, 58, 0.05) 1px,
+    transparent 1.6px
+  );
+  background-size: 26px 26px;
+}
+
+/* Soft "display case" stage behind the 3D viewer — bright, premium, focal. */
+.ench-stage {
+  background:
+    radial-gradient(120% 85% at 50% 16%, #ffffff 0%, #eafaf4 46%, #d4f1e6 100%);
+}
+.deep-time .ench-stage {
+  background: radial-gradient(120% 85% at 50% 16%, #0e3331 0%, #0a2a28 55%, #051d1c 100%);
+}
+.ds-gradient-mint {
+  background-image: var(--gradient-ds-mint);
+}
+.ds-gradient-sky {
+  background-image: var(--gradient-ds-sky);
+}
+
+/* Visible focus ring on every interactive element. */
+.ds-focus:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-ds-bg), 0 0 0 4px var(--color-ds-primary);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(32, 199, 201, 0.3);
+  border-radius: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ============================================================================
+   Reusable component classes (design-system primitives)
+   ========================================================================== */
+
+/* --- Buttons --------------------------------------------------------------- */
+.ench-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  border-radius: var(--radius-ds);
+  padding: 0.7rem 1.25rem;
+  font-size: 0.9rem;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform 0.12s ease, background-color 0.15s ease,
+    box-shadow 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.ench-btn-primary {
+  background: var(--color-ds-primary);
+  color: var(--color-ds-on-primary);
+  box-shadow: 0 3px 0 0 var(--color-ds-primary-deep), var(--shadow-ds);
+}
+.ench-btn-primary:hover {
+  background: var(--color-ds-accent);
+  color: #fff;
+}
+.ench-btn-primary:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 0 var(--color-ds-primary-deep);
+}
+.ench-btn-secondary {
+  background: var(--color-ds-surface);
+  color: var(--color-ds-primary);
+  border: 1.5px solid var(--color-ds-border-strong);
+  box-shadow: var(--shadow-ds);
+}
+.ench-btn-secondary:hover {
+  border-color: var(--color-ds-primary);
+  color: var(--color-ds-accent);
+}
+.ench-btn-secondary:active {
+  transform: translateY(1px);
+}
+
+/* --- Learning card --------------------------------------------------------- */
+.ench-card {
+  background: var(--color-ds-surface);
+  border: 1px solid var(--color-ds-border);
+  border-radius: var(--radius-ds-lg);
+  box-shadow: var(--shadow-ds);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.ench-card-interactive:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-ds-border-strong);
+  box-shadow: var(--shadow-ds-glow);
+}
+
+/* --- Topic chip ------------------------------------------------------------ */
+.ench-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: 9999px;
+  border: 1px solid var(--color-ds-border);
+  background: var(--color-ds-surface-2);
+  color: var(--color-ds-muted);
+  padding: 0.5rem 0.875rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: transform 0.12s ease, background-color 0.15s, color 0.15s,
+    border-color 0.15s;
+}
+.ench-chip:active {
+  transform: scale(0.95);
+}
+.ench-chip[aria-pressed="true"],
+.ench-chip-active {
+  background: color-mix(in srgb, var(--color-ds-primary) 14%, transparent);
+  border-color: color-mix(in srgb, var(--color-ds-primary) 45%, transparent);
+  color: var(--color-ds-accent);
+}
+
+/* --- Bottom navigation ----------------------------------------------------- */
+.ench-bottom-nav {
+  border-top: 1px solid var(--color-ds-border);
+  background: color-mix(in srgb, var(--color-ds-surface) 92%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+/* --- Evidence badges ------------------------------------------------------- */
+.ench-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  padding: 0.125rem 0.625rem;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.ench-badge-known {
+  background: color-mix(in srgb, var(--color-ds-success) 14%, transparent);
+  border-color: color-mix(in srgb, var(--color-ds-success) 30%, transparent);
+  color: var(--color-ds-success);
+}
+.ench-badge-inferred {
+  background: color-mix(in srgb, var(--color-ds-info) 14%, transparent);
+  border-color: color-mix(in srgb, var(--color-ds-info) 30%, transparent);
+  color: var(--color-ds-info);
+}
+.ench-badge-debated {
+  background: color-mix(in srgb, var(--color-ds-warning) 16%, transparent);
+  border-color: color-mix(in srgb, var(--color-ds-warning) 32%, transparent);
+  color: var(--color-ds-warning);
+}
+
+/* --- Knowledge-tree node --------------------------------------------------- */
+.ench-node {
+  display: flex;
+  height: 2.25rem;
+  width: 2.25rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 2px solid var(--color-ds-primary);
+  background: color-mix(in srgb, var(--color-ds-primary) 12%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-ds-primary) 12%, transparent);
+}
+.ench-node-locked {
+  border-color: var(--color-ds-border);
+  background: var(--color-ds-surface-2);
+  box-shadow: none;
+}
+
+/* --- 3D viewer panel ------------------------------------------------------- */
+.ench-panel {
+  background: color-mix(in srgb, var(--color-ds-surface) 88%, transparent);
+  border: 1px solid var(--color-ds-border);
+  border-radius: var(--radius-ds);
+  box-shadow: var(--shadow-ds);
+  backdrop-filter: blur(8px);
+}
