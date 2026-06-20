@@ -107,34 +107,38 @@
    data-theme="deep-time") to <html> to enable. NOT the default.
 ---------------------------------------------------------------------------- */
 .deep-time {
-  --color-ds-primary: #2bd3d5;
-  --color-ds-primary-deep: #128e90;
-  --color-ds-secondary: #6fd08c;
-  --color-ds-accent: #58e0e2;
-  --color-ds-on-primary: #042322;
+  /* Luminous mint-teal (logo glow) on deep teal-green (channel art). */
+  --color-ds-primary: #2dd4bf; /* luminous mint-teal — primary */
+  --color-ds-primary-deep: #11a594; /* deeper teal — button lip / press */
+  --color-ds-secondary: #9bd649; /* lime leaf green (channel-art highlight) */
+  --color-ds-accent: #5eead4; /* bright mint glow — hover / emphasis */
+  --color-ds-on-primary: #04211f; /* dark ink on luminous surfaces (AA) */
 
-  --color-ds-bg: #051d1c;
-  --color-ds-surface: #0a2a28;
-  --color-ds-surface-2: #0e3331;
-  --color-ds-surface-3: #123b39;
+  --color-ds-bg: #062a27; /* deep teal-green base */
+  --color-ds-surface: #0c3a36; /* panel */
+  --color-ds-surface-2: #114641; /* elevated / hover */
+  --color-ds-surface-3: #0a332f; /* inputs / wells */
 
-  --color-ds-border: #1c4a47;
-  --color-ds-border-strong: #2a625e;
+  --color-ds-border: #1d544e; /* hairline */
+  --color-ds-border-strong: #2c6b63; /* hover / emphasis */
 
-  --color-ds-text: #e8fbf8;
-  --color-ds-muted: #a7cfcb;
-  --color-ds-faint: #6e938f;
+  --color-ds-text: #eafbf6; /* near-white mint */
+  --color-ds-muted: #a9d4cd; /* pale teal — secondary */
+  --color-ds-faint: #7aa8a2; /* faint tertiary */
 
   --color-ds-success: #4fd08a;
   --color-ds-info: #5be0e2;
   --color-ds-warning: #ffc857;
   --color-ds-danger: #ff8a6b;
 
-  --shadow-ds: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.35);
-  --shadow-ds-glow: 0 0 0 1px rgba(43, 211, 213, 0.22),
-    0 10px 30px rgba(43, 211, 213, 0.18);
-  --gradient-ds-mint: linear-gradient(180deg, #06201f 0%, #0a2a28 100%);
-  --gradient-ds-sky: linear-gradient(160deg, #0a2a28 0%, #051d1c 100%);
+  --shadow-ds: 0 1px 2px rgba(0, 0, 0, 0.45), 0 12px 30px rgba(0, 0, 0, 0.4);
+  --shadow-ds-glow: 0 0 0 1px rgba(45, 212, 191, 0.3),
+    0 14px 36px rgba(45, 212, 191, 0.22);
+  --shadow-ds-btn: 0 3px 0 0 var(--color-ds-primary-deep),
+    0 8px 20px rgba(0, 0, 0, 0.45);
+  --gradient-ds-hero: linear-gradient(120deg, #9bd649 0%, #0e8f90 50%, #157a82 100%);
+  --gradient-ds-mint: linear-gradient(180deg, #0a332f 0%, #062a27 100%);
+  --gradient-ds-sky: linear-gradient(160deg, #0c3a36 0%, #062a27 100%);
 }
 
 * {
@@ -203,9 +207,19 @@ h4 {
 .deep-time .ench-aurora {
   background-color: var(--color-ds-bg);
   background-image:
-    radial-gradient(60% 50% at 15% 0%, rgba(111, 208, 140, 0.12), transparent 70%),
-    radial-gradient(55% 45% at 90% 8%, rgba(43, 211, 213, 0.14), transparent 70%),
-    linear-gradient(180deg, #0a2a28 0%, #051d1c 100%);
+    radial-gradient(58% 55% at 8% -8%, rgba(155, 214, 73, 0.24), transparent 68%),
+    radial-gradient(62% 52% at 94% 4%, rgba(21, 122, 130, 0.42), transparent 72%),
+    radial-gradient(95% 70% at 50% 128%, rgba(14, 143, 144, 0.3), transparent 72%),
+    linear-gradient(168deg, #0c4a44 0%, #072e2b 56%, #041f1e 100%);
+}
+
+/* Light dot texture on dark surfaces. */
+.deep-time .ench-dots {
+  background-image: radial-gradient(
+    circle at center,
+    rgba(180, 245, 230, 0.07) 1px,
+    transparent 1.6px
+  );
 }
 
 /* Transparent dot texture (overlay only — no background fill). */
@@ -224,7 +238,7 @@ h4 {
     radial-gradient(120% 85% at 50% 16%, #ffffff 0%, #eafaf4 46%, #d4f1e6 100%);
 }
 .deep-time .ench-stage {
-  background: radial-gradient(120% 85% at 50% 16%, #0e3331 0%, #0a2a28 55%, #051d1c 100%);
+  background: radial-gradient(120% 85% at 50% 14%, #15514a 0%, #0c3a36 52%, #062a27 100%);
 }
 .ds-gradient-mint {
   background-image: var(--gradient-ds-mint);

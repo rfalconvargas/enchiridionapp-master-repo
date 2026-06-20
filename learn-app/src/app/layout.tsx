@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#e8fbf8",
+  themeColor: "#062a27",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -45,7 +45,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fredoka.variable} ${manrope.variable} ${atkinson.variable}`}
+      className={`deep-time ${fredoka.variable} ${manrope.variable} ${atkinson.variable}`}
     >
       <head>
         {/* Google tag (gtag.js) */}

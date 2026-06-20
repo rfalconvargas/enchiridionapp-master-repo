@@ -96,7 +96,7 @@ export default function LandingPage() {
 
           {/* 3D flourish */}
           <div className="relative mx-auto aspect-square w-full max-w-sm">
-            <div className="absolute inset-0 rounded-[var(--radius-ds-xl)] border border-ds-primary/20 bg-gradient-to-br from-white to-[#e3f8f1] ds-glow" />
+            <div className="absolute inset-0 rounded-[var(--radius-ds-xl)] border border-ds-primary/20 bg-gradient-to-br from-ds-surface-2 to-ds-bg ds-glow" />
             <div className="absolute inset-0">
               <HeroCanvas />
             </div>

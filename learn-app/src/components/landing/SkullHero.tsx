@@ -63,12 +63,21 @@ export function SkullHero() {
   };
 
   return (
-    <section className="relative flex h-screen min-h-[600px] w-full items-center justify-center overflow-hidden bg-[#EDF1E4] text-[#1F2D24]">
+    <section className="relative flex h-screen min-h-[600px] w-full items-center justify-center overflow-hidden bg-[#072e2b] text-[#eafbf6]">
+      {/* Layer -1: cinematic channel-art gradient (green → teal → deep) */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0"
+        aria-hidden="true"
+        style={{
+          backgroundImage:
+            "radial-gradient(58% 55% at 8% -8%, rgba(155,214,73,0.26), transparent 68%), radial-gradient(62% 52% at 94% 4%, rgba(21,122,130,0.45), transparent 72%), radial-gradient(95% 70% at 50% 128%, rgba(14,143,144,0.32), transparent 72%), linear-gradient(168deg, #0e544c 0%, #082f2c 56%, #041f1e 100%)",
+        }}
+      />
       {/* Top nav */}
       <header className="absolute left-0 top-0 z-50 flex w-full items-center justify-between px-6 py-6 md:px-12">
         <div
           style={{ fontFamily: ZIMULA_BD }}
-          className="flex select-none items-center gap-2.5 text-xl font-black tracking-tighter text-[#1F2D24] md:text-2xl"
+          className="flex select-none items-center gap-2.5 text-xl font-black tracking-tighter text-[#eafbf6] md:text-2xl"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -109,19 +118,18 @@ export function SkullHero() {
         loop
         playsInline
         aria-hidden="true"
-        className="absolute inset-0 z-0 h-full w-full object-cover opacity-25 mix-blend-multiply"
+        className="absolute inset-0 z-0 h-full w-full object-cover opacity-[0.18] mix-blend-screen"
       >
         <source src="/flora-shadows.webm" type="video/webm" />
       </video>
 
-      {/* Layer 1: warm wash + soft vignette (teal-leaning, on brand) */}
-      <div className="pointer-events-none absolute inset-0 z-[1] bg-[rgba(244,247,236,0.35)]" aria-hidden="true" />
+      {/* Layer 1: depth vignette for text legibility (deep teal) */}
       <div
         className="pointer-events-none absolute inset-0 z-[1]"
         aria-hidden="true"
         style={{
           background:
-            "radial-gradient(120% 90% at 50% 38%, transparent 45%, rgba(14,143,144,0.2) 100%)",
+            "radial-gradient(120% 90% at 50% 36%, transparent 42%, rgba(4,28,27,0.55) 100%)",
         }}
       />
 
@@ -144,7 +152,7 @@ export function SkullHero() {
       >
         <h1
           style={{ fontFamily: ZIMULA_BD }}
-          className="select-none text-[17vw] font-black leading-none tracking-tighter text-[#2F7D63] opacity-25 md:text-[14vw]"
+          className="select-none text-[17vw] font-black leading-none tracking-tighter text-[#5eead4] opacity-[0.14] md:text-[14vw]"
         >
           ENCHIRIDION
         </h1>
@@ -160,7 +168,7 @@ export function SkullHero() {
           style={{ y: skullScrollY }}
           src="/spino-skull.png"
           alt="Spinosaurus mirabilis lateral cranium reconstruction"
-          className="h-auto w-[130vw] max-w-[900px] select-none drop-shadow-[0_35px_60px_rgba(0,0,0,0.55)] md:w-[65vw]"
+          className="h-auto w-[130vw] max-w-[900px] select-none [filter:drop-shadow(0_24px_55px_rgba(0,0,0,0.5))_drop-shadow(0_0_42px_rgba(94,234,212,0.28))] md:w-[65vw]"
         />
       </motion.div>
 
@@ -177,14 +185,14 @@ export function SkullHero() {
           animate="show"
           whileHover={prefersReducedMotion ? undefined : { y: -6 }}
           transition={{ type: "spring", stiffness: 300, damping: 24 }}
-          className="group max-w-md rounded-2xl border border-[#2F7D6325] bg-[rgba(252,251,245,0.96)] p-8 shadow-[0_18px_56px_rgba(47,125,99,0.18)] backdrop-blur-md transition-colors duration-200 hover:border-[#2F7D6380]"
+          className="group max-w-md rounded-2xl border border-[#5eead42e] bg-[rgba(9,46,42,0.66)] p-8 shadow-[0_22px_60px_rgba(0,0,0,0.4)] backdrop-blur-md transition-colors duration-200 hover:border-[#5eead466]"
         >
-          <span className="mb-3 block text-[11px] font-semibold uppercase tracking-[0.18em] text-[#2e9e6a]">
+          <span className="mb-3 block text-[11px] font-semibold uppercase tracking-[0.18em] text-[#7ee0c9]">
             Deep-time learning
           </span>
           <p
             style={{ fontFamily: ZIMULA_MED }}
-            className="text-lg font-medium leading-relaxed text-[#1F2D24] md:text-xl"
+            className="text-lg font-medium leading-relaxed text-[#eafbf6] md:text-xl"
           >
             See how prehistoric life is reconstructed — and watch the science
             change with every new discovery.
@@ -192,7 +200,7 @@ export function SkullHero() {
           <Link
             href="/demo"
             style={{ fontFamily: ZIMULA_MED }}
-            className="ds-focus mt-6 inline-flex items-center gap-2 border-t border-[#1F2D24]/15 pt-4 text-[11px] font-bold uppercase tracking-[0.12em] text-[#1F2D24] transition-colors duration-200 hover:text-[#14a6a8]"
+            className="ds-focus mt-6 inline-flex items-center gap-2 border-t border-[#eafbf61f] pt-4 text-[11px] font-bold uppercase tracking-[0.12em] text-[#eafbf6] transition-colors duration-200 hover:text-[#5eead4]"
           >
             Start exploring
             <ArrowDown size={13} strokeWidth={2.4} className="-rotate-90" />
@@ -207,15 +215,15 @@ export function SkullHero() {
           animate="show"
           whileHover={prefersReducedMotion ? undefined : { y: -6 }}
           transition={{ type: "spring", stiffness: 300, damping: 24 }}
-          className="flex flex-col justify-between gap-6 rounded-2xl border border-[#2F7D6325] bg-[rgba(252,251,245,0.96)] p-8 shadow-[0_18px_56px_rgba(47,125,99,0.18)] backdrop-blur-md transition-colors duration-200 hover:border-[#2F7D6380] md:max-w-xs"
+          className="flex flex-col justify-between gap-6 rounded-2xl border border-[#5eead42e] bg-[rgba(9,46,42,0.66)] p-8 shadow-[0_22px_60px_rgba(0,0,0,0.4)] backdrop-blur-md transition-colors duration-200 hover:border-[#5eead466] md:max-w-xs"
         >
           <div>
-            <span className="mb-3 block text-[11px] font-semibold uppercase tracking-[0.18em] text-[#2e9e6a]">
+            <span className="mb-3 block text-[11px] font-semibold uppercase tracking-[0.18em] text-[#7ee0c9]">
               Runs in your browser
             </span>
             <p
               style={{ fontFamily: ZIMULA_MED }}
-              className="text-base leading-relaxed text-[#1F2D24]/80"
+              className="text-base leading-relaxed text-[#d7efe9]"
             >
               Spin real fossil reconstructions in 3D — no install, no sign-up.
             </p>
@@ -233,7 +241,7 @@ export function SkullHero() {
       {/* Scroll cue — there's more below */}
       <motion.div
         style={{ opacity: opacityFade }}
-        className="pointer-events-none absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-1 text-[#2F7D63]"
+        className="pointer-events-none absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-1 text-[#5eead4]"
         aria-hidden="true"
       >
         <span className="text-[10px] font-bold uppercase tracking-[0.2em]">
