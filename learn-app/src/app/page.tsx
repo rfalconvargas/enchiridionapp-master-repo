@@ -13,6 +13,7 @@ import {
 import { HeroCanvas } from "@/components/landing/HeroCanvas";
 import { WaitlistButton } from "@/components/landing/WaitlistButton";
 import { SkullHero } from "@/components/landing/SkullHero";
+import { FeedbackButton } from "@/components/FeedbackButton";
 import { SPINOSAURUS_LESSON } from "@/data/lessons";
 
 // The three core product promises (clear, not generic).
@@ -66,26 +67,23 @@ export default function LandingPage() {
           </div>
 
         {/* Hero */}
-        <section className="grid items-center gap-8 py-8 md:grid-cols-2">
+        <section className="grid items-center gap-8 pb-10 pt-6 md:grid-cols-2">
           <div>
             <span className="inline-flex items-center gap-1.5 rounded-full border border-ds-primary/30 bg-ds-primary/10 px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-ds-accent">
               <Sparkles size={12} />
               First lesson: Spinosaurus
             </span>
-            <h1 className="mt-4 text-4xl font-bold leading-[1.05] tracking-tight text-ds-text sm:text-5xl">
+            <h1 className="mt-4 text-balance text-4xl font-bold leading-[1.05] tracking-tight text-ds-text sm:text-5xl">
               Learn complex things in{" "}
               <span className="text-ds-primary">three dimensions.</span>
             </h1>
-            <p className="mt-4 max-w-md text-base leading-relaxed text-ds-muted">
+            <p className="mt-4 max-w-md text-pretty text-base leading-relaxed text-ds-muted">
               Enchiridion is a 3D-first learning app for prehistory and other
               visually complex topics. Explore a lesson, watch a reconstruction
               change over time, and build your own Knowledge Tree.
             </p>
             <div className="mt-7 flex flex-wrap items-center gap-3">
-              <Link
-                href="/demo"
-                className="ds-focus inline-flex items-center gap-2 rounded-[var(--radius-ds)] bg-ds-primary px-5 py-3 text-sm font-semibold text-ds-on-primary shadow-ds-glow transition-colors hover:bg-ds-accent"
-              >
+              <Link href="/demo" className="ds-focus ench-cta">
                 Launch demo
                 <ArrowRight size={16} />
               </Link>
@@ -110,23 +108,22 @@ export default function LandingPage() {
           {VALUE_PROPS.map(({ icon: Icon, title, desc }) => (
             <div
               key={title}
-              className="rounded-[var(--radius-ds-lg)] border border-ds-border bg-ds-surface p-4 shadow-ds transition-transform duration-150 hover:-translate-y-0.5"
+              className="ench-card ench-card-interactive p-4"
             >
               <span className="flex h-9 w-9 items-center justify-center rounded-[var(--radius-ds-sm)] bg-ds-secondary/15 text-ds-secondary">
                 <Icon size={18} />
               </span>
               <h3 className="mt-3 text-sm font-semibold text-ds-text">{title}</h3>
-              <p className="mt-1 text-xs leading-relaxed text-ds-muted">{desc}</p>
+              <p className="mt-1 text-pretty text-xs leading-relaxed text-ds-muted">
+                {desc}
+              </p>
             </div>
           ))}
         </section>
 
         {/* Demo preview — the five app tabs */}
-        <section className="py-8">
-          <p className="text-[11px] font-medium uppercase tracking-wider text-ds-faint">
-            Inside the demo
-          </p>
-          <h2 className="mt-1 text-xl font-bold text-ds-text">
+        <section className="py-10">
+          <h2 className="text-balance text-xl font-bold text-ds-text">
             One app, five tabs
           </h2>
           <div className="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-5">
@@ -150,7 +147,7 @@ export default function LandingPage() {
         </section>
 
         {/* The first lesson: Spinosaurus */}
-        <section className="py-8">
+        <section className="py-10">
           <div className="overflow-hidden rounded-[var(--radius-ds-lg)] border border-ds-primary/30 bg-ds-surface ds-glow">
             <div className="relative h-28 ds-grid-bg">
               <div className="absolute inset-0 bg-gradient-to-br from-ds-primary/25 via-ds-secondary/15 to-transparent" />
@@ -166,13 +163,10 @@ export default function LandingPage() {
             </div>
             <div className="grid gap-4 p-4 sm:grid-cols-2">
               <div>
-                <p className="text-sm leading-relaxed text-ds-muted">
+                <p className="text-pretty text-sm leading-relaxed text-ds-muted">
                   {SPINOSAURUS_LESSON.summary}
                 </p>
-                <Link
-                  href="/demo"
-                  className="ds-focus mt-4 inline-flex items-center gap-2 rounded-[var(--radius-ds)] bg-ds-primary px-4 py-2.5 text-sm font-semibold text-ds-on-primary shadow-ds-glow transition-colors hover:bg-ds-accent"
-                >
+                <Link href="/demo" className="ds-focus ench-cta mt-4">
                   Start the lesson
                   <ArrowRight size={16} />
                 </Link>
@@ -195,20 +189,21 @@ export default function LandingPage() {
         </section>
 
         {/* Closing CTA */}
-        <section className="flex flex-col items-center gap-4 py-12 text-center">
-          <h2 className="text-2xl font-bold text-ds-text">
+        <section className="flex flex-col items-center gap-4 py-16 text-center">
+          <h2 className="text-balance text-2xl font-bold text-ds-text">
             See it in three dimensions.
           </h2>
           <div className="flex flex-wrap items-center justify-center gap-3">
-            <Link
-              href="/demo"
-              className="ds-focus inline-flex items-center gap-2 rounded-[var(--radius-ds)] bg-ds-primary px-5 py-3 text-sm font-semibold text-ds-on-primary shadow-ds-glow transition-colors hover:bg-ds-accent"
-            >
+            <Link href="/demo" className="ds-focus ench-cta">
               Launch demo
               <ArrowRight size={16} />
             </Link>
             <WaitlistButton variant="outline" />
+            <FeedbackButton variant="outline" />
           </div>
+          <p className="text-xs text-ds-faint">
+            Tried the demo? Your feedback shapes what we build next.
+          </p>
         </section>
         </div>
       </main>

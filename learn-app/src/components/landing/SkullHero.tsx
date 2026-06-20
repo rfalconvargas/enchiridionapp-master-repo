@@ -83,7 +83,7 @@ export function SkullHero() {
           href="/demo"
           aria-label="Launch the Enchiridion app"
           style={{ fontFamily: ZIMULA_BD }}
-          className="group flex items-center gap-2.5 rounded-xl bg-gradient-to-r from-[#2F7D63] to-[#3FA47E] px-5 py-3 text-xs font-black uppercase tracking-widest text-[#F4F7EC] shadow-[0_8px_28px_rgba(47,125,99,0.32)] transition-all duration-200 hover:brightness-105 active:scale-95"
+          className="group flex items-center gap-2.5 rounded-xl bg-gradient-to-r from-[#2e9e6a] to-[#14a6a8] px-5 py-3 text-xs font-black uppercase tracking-widest text-[#F4F7EC] shadow-[0_8px_28px_rgba(20,166,168,0.32)] transition-all duration-200 hover:brightness-105 active:scale-95"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -114,14 +114,25 @@ export function SkullHero() {
         <source src="/flora-shadows.webm" type="video/webm" />
       </video>
 
-      {/* Layer 1: warm wash + soft vignette */}
+      {/* Layer 1: warm wash + soft vignette (teal-leaning, on brand) */}
       <div className="pointer-events-none absolute inset-0 z-[1] bg-[rgba(244,247,236,0.35)]" aria-hidden="true" />
       <div
         className="pointer-events-none absolute inset-0 z-[1]"
         aria-hidden="true"
         style={{
           background:
-            "radial-gradient(120% 90% at 50% 38%, transparent 45%, rgba(47,125,99,0.18) 100%)",
+            "radial-gradient(120% 90% at 50% 38%, transparent 45%, rgba(14,143,144,0.2) 100%)",
+        }}
+      />
+
+      {/* Layer 2: luminous brand halo behind the skull (echoes the logo glow) */}
+      <div
+        className="pointer-events-none absolute z-[2] aspect-square w-[78vmin] max-w-[760px] rounded-full"
+        aria-hidden="true"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(45,212,191,0.34) 0%, rgba(32,199,201,0.14) 38%, transparent 70%)",
+          filter: "blur(18px)",
         }}
       />
 
@@ -168,22 +179,22 @@ export function SkullHero() {
           transition={{ type: "spring", stiffness: 300, damping: 24 }}
           className="group max-w-md rounded-2xl border border-[#2F7D6325] bg-[rgba(252,251,245,0.96)] p-8 shadow-[0_18px_56px_rgba(47,125,99,0.18)] backdrop-blur-md transition-colors duration-200 hover:border-[#2F7D6380]"
         >
-          <span className="mb-3 block font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-[#2F7D63]">
-            System Module // 01
+          <span className="mb-3 block text-[11px] font-semibold uppercase tracking-[0.18em] text-[#2e9e6a]">
+            Deep-time learning
           </span>
           <p
             style={{ fontFamily: ZIMULA_MED }}
             className="text-lg font-medium leading-relaxed text-[#1F2D24] md:text-xl"
           >
-            Mapping deep-time evolution and morphology variations inside a local
-            vector engine.
+            See how prehistoric life is reconstructed — and watch the science
+            change with every new discovery.
           </p>
           <Link
             href="/demo"
             style={{ fontFamily: ZIMULA_MED }}
-            className="ds-focus mt-6 inline-flex items-center gap-2 border-t border-[#1F2D24]/15 pt-4 text-[11px] font-bold uppercase tracking-[0.12em] text-[#1F2D24] transition-colors duration-200 hover:text-[#2F7D63]"
+            className="ds-focus mt-6 inline-flex items-center gap-2 border-t border-[#1F2D24]/15 pt-4 text-[11px] font-bold uppercase tracking-[0.12em] text-[#1F2D24] transition-colors duration-200 hover:text-[#14a6a8]"
           >
-            Enter Active Workspace
+            Start exploring
             <ArrowDown size={13} strokeWidth={2.4} className="-rotate-90" />
           </Link>
         </motion.div>
@@ -199,22 +210,22 @@ export function SkullHero() {
           className="flex flex-col justify-between gap-6 rounded-2xl border border-[#2F7D6325] bg-[rgba(252,251,245,0.96)] p-8 shadow-[0_18px_56px_rgba(47,125,99,0.18)] backdrop-blur-md transition-colors duration-200 hover:border-[#2F7D6380] md:max-w-xs"
         >
           <div>
-            <span className="mb-3 block font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-[#2F7D63]">
-              Hardware-Accelerated
+            <span className="mb-3 block text-[11px] font-semibold uppercase tracking-[0.18em] text-[#2e9e6a]">
+              Runs in your browser
             </span>
             <p
               style={{ fontFamily: ZIMULA_MED }}
               className="text-base leading-relaxed text-[#1F2D24]/80"
             >
-              Stream real reconstructions through a unified WebGL context.
+              Spin real fossil reconstructions in 3D — no install, no sign-up.
             </p>
           </div>
           <Link
             href="/demo"
             style={{ fontFamily: ZIMULA_BD }}
-            className="ds-focus w-full rounded-xl bg-gradient-to-r from-[#2F7D63] to-[#3FA47E] px-8 py-4 text-center text-xs font-black uppercase tracking-widest text-[#F4F7EC] shadow-[0_12px_36px_rgba(47,125,99,0.3)] transition-all duration-200 hover:brightness-105 active:scale-[0.98]"
+            className="ds-focus w-full rounded-xl bg-gradient-to-r from-[#2e9e6a] to-[#14a6a8] px-8 py-4 text-center text-xs font-black uppercase tracking-widest text-[#F4F7EC] shadow-[0_12px_36px_rgba(20,166,168,0.3)] transition-all duration-200 hover:brightness-105 active:scale-[0.98]"
           >
-            Launch Engine Terminal
+            Launch the app
           </Link>
         </motion.div>
       </motion.div>

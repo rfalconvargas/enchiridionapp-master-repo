@@ -66,7 +66,7 @@
 
   --color-ds-text: #063a3a; /* Forest Teal — primary text */
   --color-ds-muted: #39706f; /* Muted Teal — secondary text (AA) */
-  --color-ds-faint: #729391; /* Soft Gray Green — de-emphasized */
+  --color-ds-faint: #4f7d79; /* Soft Gray Green — de-emphasized (AA on white) */
 
   --color-ds-success: #1f9d5b; /* readable green (Known evidence) */
   --color-ds-info: #0c8f93; /* deep dino-cyan (Inferred evidence) */
@@ -96,6 +96,10 @@
   --font-display: var(--font-fredoka), ui-rounded, system-ui, sans-serif;
   --font-body: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
   --font-reading: var(--font-atkinson), Georgia, serif;
+
+  /* --- Easing (strong, intentional curves) ------------------------------ */
+  --ease-out-quart: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ----------------------------------------------------------------------------
@@ -282,8 +286,8 @@ h4 {
   line-height: 1;
   white-space: nowrap;
   cursor: pointer;
-  transition: transform 0.12s ease, background-color 0.15s ease,
-    box-shadow 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  transition: transform 0.14s var(--ease-out-quart), background-color 0.18s ease,
+    box-shadow 0.2s ease, border-color 0.18s ease, color 0.18s ease;
 }
 .ench-btn-primary {
   background: var(--color-ds-primary);
@@ -312,18 +316,52 @@ h4 {
   transform: translateY(1px);
 }
 
+/* --- Primary CTA (landing) — one consolidated treatment -------------------- */
+.ench-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1;
+  border-radius: var(--radius-ds);
+  padding: 0.75rem 1.25rem;
+  white-space: nowrap;
+  color: var(--color-ds-on-primary);
+  background: var(--color-ds-primary);
+  box-shadow: var(--shadow-ds-glow);
+  transition: transform 0.14s var(--ease-out-quart), background-color 0.18s ease,
+    box-shadow 0.2s ease, color 0.18s ease;
+}
+.ench-cta:active {
+  transform: scale(0.97);
+}
+@media (hover: hover) and (pointer: fine) {
+  .ench-cta:hover {
+    background: var(--color-ds-accent);
+    color: #fff;
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-ds-primary) 30%, transparent),
+      0 14px 34px rgba(14, 143, 144, 0.26);
+  }
+}
+
 /* --- Learning card --------------------------------------------------------- */
 .ench-card {
   background: var(--color-ds-surface);
   border: 1px solid var(--color-ds-border);
   border-radius: var(--radius-ds-lg);
   box-shadow: var(--shadow-ds);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  transition: transform 0.18s var(--ease-out-quart), box-shadow 0.2s ease,
+    border-color 0.18s ease;
 }
-.ench-card-interactive:hover {
-  transform: translateY(-2px);
-  border-color: var(--color-ds-border-strong);
-  box-shadow: var(--shadow-ds-glow);
+@media (hover: hover) and (pointer: fine) {
+  .ench-card-interactive:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-ds-border-strong);
+    box-shadow: var(--shadow-ds-glow);
+  }
 }
 
 /* --- Topic chip ------------------------------------------------------------ */
