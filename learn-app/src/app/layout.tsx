@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Fredoka, Manrope, Atkinson_Hyperlegible } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 // Display headings — playful, rounded.
@@ -46,6 +47,22 @@ export default function RootLayout({
       lang="en"
       className={`${fredoka.variable} ${manrope.variable} ${atkinson.variable}`}
     >
+      <head>
+        {/* Google tag (gtag.js) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-BV75Y67CNH"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-BV75Y67CNH');
+          `}
+        </Script>
+      </head>
       <body>{children}</body>
     </html>
   );
