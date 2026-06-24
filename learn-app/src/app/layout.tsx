@@ -30,9 +30,11 @@ const atkinson = Atkinson_Hyperlegible({
 });
 
 const TITLE_DEFAULT =
-  "Enchiridion — The interactive visual evidence engine for prehistoric science";
+  "Enchiridion — Learn it well enough to make something real";
 const DESCRIPTION =
-  "Finally understand the evidence behind the story. Enchiridion turns scientific uncertainty into visual understanding — explore Expeditions where you spin real fossil reconstructions, weigh the evidence behind every claim, and see what's known, inferred, debated, and still uncertain. The companion product to the Enchiridion YouTube channel.";
+  "A desktop learning OS that builds you a college-level-and-beyond curriculum for anything — daily sessions, real resources, real projects. Free to start.";
+const OG_DESCRIPTION =
+  "Pick something you've always wanted to learn. Enchiridion builds the path — four weeks, three sessions a week, real depth — until you can actually make something with it.";
 const OG_IMAGE = "/spino-skull.png";
 
 export const metadata: Metadata = {
@@ -44,17 +46,15 @@ export const metadata: Metadata = {
   description: DESCRIPTION,
   applicationName: BRAND_NAME,
   keywords: [
-    "visual evidence engine",
-    "interactive paleontology",
-    "prehistoric science",
-    "fossil evidence",
-    "scientific uncertainty",
-    "extinct worlds",
-    "deep time",
-    "Spinosaurus",
-    "dinosaurs",
-    "fossil reconstruction",
-    "interactive 3D",
+    "learning OS",
+    "personal curriculum",
+    "self-directed learning",
+    "learn Blender",
+    "music production",
+    "full-stack development",
+    "daily learning practice",
+    "Life Journeymap",
+    "Glyfra",
     "Enchiridion",
   ],
   authors: [{ name: BRAND_NAME, url: CHANNEL_URL }],
@@ -71,7 +71,7 @@ export const metadata: Metadata = {
     siteName: BRAND_NAME,
     url: SITE_URL,
     title: TITLE_DEFAULT,
-    description: DESCRIPTION,
+    description: OG_DESCRIPTION,
     images: [
       {
         url: OG_IMAGE,
@@ -84,7 +84,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: TITLE_DEFAULT,
-    description: DESCRIPTION,
+    description: OG_DESCRIPTION,
     images: [OG_IMAGE],
   },
   category: "education",
