@@ -1,32 +1,51 @@
-import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-
 /**
- * Public Supabase config.
+ * Supabase client for Enchiridion Learn.
  *
- * The publishable (anon) key is SAFE to ship in the browser — it only grants
- * what row-level security allows. The `waitlist` table policy lets anon INSERT
- * but not SELECT, so signups work and email addresses can't be read back.
+ * Uses @supabase/ssr's `createBrowserClient` and reads configuration from
+ * environment variables ONLY — no hardcoded URLs or keys. Provide:
+ *   NEXT_PUBLIC_SUPABASE_URL
+ *   NEXT_PUBLIC_SUPABASE_ANON_KEY
+ * (see .env.local). The publishable/anon key is safe to ship to the browser;
+ * what it can do is bounded by row-level security.
  *
- * Override per environment with NEXT_PUBLIC_SUPABASE_URL /
- * NEXT_PUBLIC_SUPABASE_ANON_KEY (e.g. in Vercel) to rotate keys without a
- * code change. The hardcoded values are a working fallback so the waitlist
- * functions out of the box.
+ * When the env vars are absent the client factory returns `null` so the app
+ * (which is a static export) still builds and runs — auth/waitlist features
+ * simply no-op with a clear "not configured" result until the keys are set.
  */
-const SUPABASE_URL =
-  process.env.NEXT_PUBLIC_SUPABASE_URL ??
-  "https://opbsfqblkixfppninyrx.supabase.co";
 
-const SUPABASE_ANON_KEY =
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ??
-  "sb_publishable_FoeFBr5KGnZJ-OTbaR96tw_loZi3d6F";
+import { createBrowserClient } from "@supabase/ssr";
+import type { SupabaseClient, Session } from "@supabase/supabase-js";
+
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 let client: SupabaseClient | null = null;
 
-export function getSupabase(): SupabaseClient | null {
+/**
+ * Returns the browser Supabase client (singleton), or `null` when the
+ * environment is not configured.
+ */
+export function createClient(): SupabaseClient | null {
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return null;
-  if (!client) client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  if (!client) client = createBrowserClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   return client;
 }
+
+/** Returns the current auth session, or `null` (unauthenticated/unconfigured). */
+export async function getSession(): Promise<Session | null> {
+  const supabase = createClient();
+  if (!supabase) return null;
+  const { data } = await supabase.auth.getSession();
+  return data.session ?? null;
+}
+
+// ---------------------------------------------------------------------------
+// Waitlist / lead capture — preserved API.
+//
+// These remain part of the public surface because the landing + app already
+// import them (WaitlistButton, MoreTab, validation forms). They now ride on
+// the env-configured client above instead of a hardcoded fallback.
+// ---------------------------------------------------------------------------
 
 export type WaitlistResult =
   | { ok: true; duplicate?: boolean }
@@ -44,7 +63,7 @@ export async function joinWaitlist(
     return { ok: false, error: "Please enter a valid email address." };
   }
 
-  const supabase = getSupabase();
+  const supabase = createClient();
   if (!supabase) return { ok: false, error: "Waitlist isn't configured yet." };
 
   const { error } = await supabase
@@ -57,4 +76,21 @@ export async function joinWaitlist(
     return { ok: false, error: error.message };
   }
   return { ok: true };
+}
+
+/**
+ * Submit a richer validation lead (Early Access / Request an Expedition / beta).
+ * Encodes structured answers into the `source` string so demand signal is
+ * captured without a schema change.
+ */
+export async function submitLead(
+  email: string,
+  kind: string,
+  meta: Record<string, string | undefined> = {}
+): Promise<WaitlistResult> {
+  const tags = Object.entries(meta)
+    .filter(([, v]) => v && v.trim())
+    .map(([k, v]) => `${k}=${v!.trim().replace(/[·\n]/g, " ").slice(0, 80)}`);
+  const source = [kind, ...tags].join(" · ").slice(0, 480);
+  return joinWaitlist(email, source);
 }

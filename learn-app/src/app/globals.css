@@ -102,6 +102,68 @@
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* ============================================================================
+   ENCHIRIDION LEARN — light/dark token system (enc-*)
+
+   LIGHT is the default (`:root`); DARK is opt-in via `data-theme="dark"` on
+   <html> (set by ThemeProvider + the pre-paint script in layout.tsx). One
+   teal/green family across both modes: green/teal on white (light) and teal on
+   near-black green (dark).
+
+   `@theme inline` maps these CSS vars to Tailwind utilities so they switch at
+   runtime: bg-enc-bg, bg-enc-surface, bg-enc-elevated, text-enc-text,
+   text-enc-muted, text-enc-faint, bg-enc-accent + text-enc-on-accent,
+   bg-enc-accent-dim, border-enc-border, border-enc-border-hover,
+   text-enc-forest, text-enc-amber.
+   ========================================================================== */
+:root {
+  --enc-bg: #f3faf8;
+  --enc-surface: #ffffff;
+  --enc-elevated: #ffffff;
+  --enc-accent: #00b39a;
+  --enc-on-accent: #04221e;
+  --enc-accent-dim: rgba(0, 179, 154, 0.12);
+  --enc-text: #06231f;
+  --enc-muted: #3e605b;
+  --enc-faint: #6e8e89;
+  --enc-border: #dceae6;
+  --enc-border-hover: #c2dcd6;
+  --enc-forest: #1a5c35;
+  --enc-amber: #6f7d1f;
+}
+
+[data-theme="dark"] {
+  --enc-bg: #041c1a;
+  --enc-surface: #071f1c;
+  --enc-elevated: #0d2e28;
+  --enc-accent: #00e8c8;
+  --enc-on-accent: #04211e;
+  --enc-accent-dim: rgba(0, 232, 200, 0.12);
+  --enc-text: #f0fffe;
+  --enc-muted: #7aada6;
+  --enc-faint: #4a8a83;
+  --enc-border: rgba(0, 232, 200, 0.16);
+  --enc-border-hover: rgba(0, 232, 200, 0.32);
+  --enc-forest: #1a5c35;
+  --enc-amber: #7a9a3a;
+}
+
+@theme inline {
+  --color-enc-bg: var(--enc-bg);
+  --color-enc-surface: var(--enc-surface);
+  --color-enc-elevated: var(--enc-elevated);
+  --color-enc-accent: var(--enc-accent);
+  --color-enc-on-accent: var(--enc-on-accent);
+  --color-enc-accent-dim: var(--enc-accent-dim);
+  --color-enc-text: var(--enc-text);
+  --color-enc-muted: var(--enc-muted);
+  --color-enc-faint: var(--enc-faint);
+  --color-enc-border: var(--enc-border);
+  --color-enc-border-hover: var(--enc-border-hover);
+  --color-enc-forest: var(--enc-forest);
+  --color-enc-amber: var(--enc-amber);
+}
+
 /* ----------------------------------------------------------------------------
    Deep Time Mode — optional dark secondary theme. Apply `.deep-time` (or
    data-theme="deep-time") to <html> to enable. NOT the default.
@@ -141,6 +203,108 @@
   --gradient-ds-sky: linear-gradient(160deg, #0c3a36 0%, #062a27 100%);
 }
 
+/* ----------------------------------------------------------------------------
+   KINEFORGE — volcanic/amber cinematic sub-brand scope.
+
+   A sibling identity inside the Enchiridion ecosystem. Applied via the
+   `.kineforge` wrapper on the /kineforge route only, so it never touches the
+   light/Deep-Time app. It redefines the SAME semantic `--color-ds-*` tokens,
+   which means every existing primitive (`ench-cta`, `ench-card`, `ds-glow`,
+   `ds-focus`, `Reveal`…) re-skins itself to volcanic amber for free.
+
+   Direction: volcanic black charcoal · amber fossil highlights · muted
+   bone-white text · the Enchiridion mint-teal kept as the science accent.
+---------------------------------------------------------------------------- */
+.kineforge {
+  --color-ds-primary: #f5a524; /* Amber Fossil — primary actions / key light */
+  --color-ds-primary-deep: #b8740d; /* darker amber — button "lip" / press */
+  --color-ds-secondary: #2dd4bf; /* mint-teal — Enchiridion science accent */
+  --color-ds-accent: #ffc04d; /* warm amber glow — emphasis text & hover */
+  --color-ds-on-primary: #1a1206; /* ink on amber surfaces (AA) */
+
+  --color-ds-bg: #0c0a08; /* volcanic black base */
+  --color-ds-surface: #161210; /* charcoal panel */
+  --color-ds-surface-2: #201a15; /* elevated / hover */
+  --color-ds-surface-3: #120e0b; /* inputs / wells */
+
+  --color-ds-border: #2a2118; /* warm hairline */
+  --color-ds-border-strong: #3c2f22; /* hover / emphasis */
+
+  --color-ds-text: #f3ebdd; /* muted bone-white — primary text */
+  --color-ds-muted: #c4b6a2; /* warm taupe — secondary text (AA) */
+  --color-ds-faint: #95876f; /* faint tertiary (AA on volcanic) */
+
+  --color-ds-success: #5bd08a; /* "today / shipping" green */
+  --color-ds-info: #5be0e2;
+  --color-ds-warning: #ffc857;
+  --color-ds-danger: #ff7a59; /* discovery coral */
+
+  --shadow-ds: 0 1px 2px rgba(0, 0, 0, 0.5), 0 16px 38px rgba(0, 0, 0, 0.5);
+  --shadow-ds-glow: 0 0 0 1px rgba(245, 165, 36, 0.22),
+    0 20px 50px rgba(245, 165, 36, 0.16);
+  --shadow-ds-btn: 0 3px 0 0 var(--color-ds-primary-deep),
+    0 10px 24px rgba(0, 0, 0, 0.55);
+
+  background-color: var(--color-ds-bg);
+  color: var(--color-ds-text);
+}
+
+/* Volcanic backdrop — amber heat low, teal science glow high, dark vignette. */
+.kf-aurora {
+  background-color: #0c0a08;
+  background-image:
+    radial-gradient(64% 48% at 82% -6%, rgba(45, 212, 191, 0.16), transparent 68%),
+    radial-gradient(70% 60% at 14% 4%, rgba(245, 165, 36, 0.18), transparent 70%),
+    radial-gradient(120% 80% at 50% 122%, rgba(184, 116, 13, 0.22), transparent 72%),
+    linear-gradient(180deg, #100c09 0%, #0a0807 60%, #080605 100%);
+}
+
+/* Blueprint / rig-map grid overlay — faint amber lines on volcanic black. */
+.kf-grid {
+  background-image:
+    linear-gradient(rgba(245, 165, 36, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 165, 36, 0.05) 1px, transparent 1px);
+  background-size: 46px 46px;
+  -webkit-mask-image: radial-gradient(100% 80% at 50% 30%, #000 35%, transparent 100%);
+  mask-image: radial-gradient(100% 80% at 50% 30%, #000 35%, transparent 100%);
+}
+
+/* Cinematic "display case" stage behind the 3D creature — volcanic floor glow. */
+.kf-stage {
+  background:
+    radial-gradient(110% 80% at 50% 8%, #211913 0%, #14100c 48%, #0a0807 100%);
+}
+
+/* Glass panel tuned for dark volcanic surfaces. */
+.kf-panel {
+  background: color-mix(in srgb, #161210 78%, transparent);
+  border: 1px solid var(--color-ds-border);
+  border-radius: var(--radius-ds);
+  box-shadow: var(--shadow-ds);
+  backdrop-filter: blur(10px);
+}
+
+/* Hairline amber top-edge highlight for "lit from the forge" panels. */
+.kf-lit {
+  position: relative;
+}
+.kf-lit::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    180deg,
+    rgba(245, 165, 36, 0.4),
+    transparent 40%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -152,8 +316,8 @@ body {
 }
 
 body {
-  background: var(--color-ds-bg);
-  color: var(--color-ds-text);
+  background: var(--enc-bg);
+  color: var(--enc-text);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -437,6 +601,12 @@ h4 {
   background: color-mix(in srgb, var(--color-ds-warning) 16%, transparent);
   border-color: color-mix(in srgb, var(--color-ds-warning) 32%, transparent);
   color: var(--color-ds-warning);
+}
+/* Speculative — the "story the bones can't confirm" tier (episode evidence). */
+.ench-badge-speculative {
+  background: color-mix(in srgb, var(--color-ds-danger) 15%, transparent);
+  border-color: color-mix(in srgb, var(--color-ds-danger) 32%, transparent);
+  color: var(--color-ds-danger);
 }
 
 /* --- Knowledge-tree node --------------------------------------------------- */
