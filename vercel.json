@@ -1,0 +1,25 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/work",
+      "destination": "https://docs.google.com/document/d/1cm44uEGrlPEcpKVgAtLnFyq7gBaXzVngBPqCQknVDh4/edit?usp=sharing",
+      "permanent": false
+    },
+    {
+      "source": "/partnerships",
+      "destination": "https://docs.google.com/document/d/1GktKbhaOrT4mZqBE0J5V2pSB1Maf0n-Rgg3Ao2Qr0s4/edit?usp=sharing",
+      "permanent": false
+    },
+    {
+      "source": "/ai-policy",
+      "destination": "https://docs.google.com/document/d/13xQgotP7_Q-ySQcE4W9FG_QnzQMSlnEDYbGyDTA0CIM/edit?usp=sharing",
+      "permanent": false
+    },
+    {
+      "source": "/channels",
+      "destination": "https://docs.google.com/document/d/10hWXCtXe402ePZDoXnreHuF3WUZhblpAt_vRWmQjIbw/edit?usp=sharing",
+      "permanent": false
+    }
+  ]
+}
