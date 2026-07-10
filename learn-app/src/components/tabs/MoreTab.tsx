@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   User,
@@ -24,11 +24,14 @@ import {
 import { TOPICS } from "@/data/topics";
 import { TREE_NODES, isNodeUnlocked } from "@/data/tree";
 import { useAppState } from "@/state/AppState";
+import { useTheme } from "@/state/ThemeProvider";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
 import { joinWaitlist } from "@/lib/supabase";
+import { track, EVENTS } from "@/lib/analytics";
+import { FeedbackButton } from "@/components/FeedbackButton";
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -70,12 +73,12 @@ function Toggle({
 
 export function MoreTab() {
   const { savedToTree, setActiveTab } = useAppState();
+  const { mode, toggleTheme } = useTheme();
+  const darkMode = mode === "dark";
   const [settings, setSettings] = useState({
     notifications: true,
-    darkMode: false, // "Deep Time Mode" — off by default (light is default)
     reducedMotion: false,
   });
-  const [themeReady, setThemeReady] = useState(false);
   const [exported, setExported] = useState(false);
   const [waitlistOpen, setWaitlistOpen] = useState(false);
   const [joined, setJoined] = useState(false);
@@ -86,26 +89,17 @@ export function MoreTab() {
   const submitWaitlist = async () => {
     setWaitError(null);
     setWaitLoading(true);
+    track(EVENTS.waitlistSubmit, { placement: "more_tab" });
     const res = await joinWaitlist(waitEmail, "more-tab");
     setWaitLoading(false);
-    if (res.ok) setJoined(true);
-    else setWaitError(res.error);
+    if (res.ok) {
+      setJoined(true);
+      track(EVENTS.waitlistSuccess, { placement: "more_tab", duplicate: !!res.duplicate });
+    } else {
+      setWaitError(res.error);
+      track(EVENTS.waitlistError, { placement: "more_tab", message: res.error });
+    }
   };
-
-  // Sync the toggle from the current theme on mount (survives tab switches).
-  useEffect(() => {
-    if (document.documentElement.classList.contains("deep-time")) {
-      setSettings((s) => ({ ...s, darkMode: true }));
-    }
-    setThemeReady(true);
-  }, []);
-
-  // "Dark interface" applies the optional Deep Time Mode theme.
-  useEffect(() => {
-    if (themeReady) {
-      document.documentElement.classList.toggle("deep-time", settings.darkMode);
-    }
-  }, [themeReady, settings.darkMode]);
 
   const saved = savedToTree.includes("spinosaurus");
   const savedTopics = TOPICS.filter((t) => savedToTree.includes(t.id));
@@ -276,18 +270,35 @@ export function MoreTab() {
       {/* 6 — Settings */}
       <SectionLabel>Settings</SectionLabel>
       <Card className="divide-y divide-ds-border">
-        {settingRows.map(({ key, label, icon: Icon }) => (
-          <div key={key} className="flex items-center gap-3 px-3.5 py-3">
-            <Icon size={17} className="text-ds-muted" />
-            <span className="flex-1 text-sm text-ds-text">{label}</span>
-            <Toggle
-              on={settings[key]}
-              label={label}
-              onClick={() => setSettings((s) => ({ ...s, [key]: !s[key] }))}
-            />
-          </div>
-        ))}
+        {settingRows.map(({ key, label, icon: Icon }) => {
+          const isDark = key === "darkMode";
+          const on = isDark
+            ? darkMode
+            : settings[key as "notifications" | "reducedMotion"];
+          const onToggle = isDark
+            ? toggleTheme
+            : () =>
+                setSettings((s) => ({
+                  ...s,
+                  [key]: !s[key as "notifications" | "reducedMotion"],
+                }));
+          return (
+            <div key={key} className="flex items-center gap-3 px-3.5 py-3">
+              <Icon size={17} className="text-ds-muted" />
+              <span className="flex-1 text-sm text-ds-text">{label}</span>
+              <Toggle on={on} label={label} onClick={onToggle} />
+            </div>
+          );
+        })}
       </Card>
+
+      {/* Feedback */}
+      <SectionLabel>Help shape Enchiridion</SectionLabel>
+      <FeedbackButton
+        variant="solid"
+        label="Share demo feedback"
+        className="w-full"
+      />
 
       {/* 7 — Join waitlist CTA */}
       <Card variant="glow" className="mt-5 p-4">
@@ -303,7 +314,10 @@ export function MoreTab() {
         <Button
           variant="primary"
           size="md"
-          onClick={() => setWaitlistOpen(true)}
+          onClick={() => {
+            track(EVENTS.waitlistClick, { placement: "more_tab" });
+            setWaitlistOpen(true);
+          }}
           className="mt-3 w-full"
         >
           Join the Waitlist

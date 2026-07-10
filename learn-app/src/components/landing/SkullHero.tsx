@@ -10,7 +10,9 @@ import {
   useSpring,
   useMotionValue,
 } from "framer-motion";
-import { ArrowDown, Rocket } from "lucide-react";
+import { ArrowDown, Rocket, Youtube } from "lucide-react";
+import { CHANNEL_URL } from "@/lib/brand";
+import { track, EVENTS } from "@/lib/analytics";
 
 /**
  * Cinematic parallax skull hero — ported from the existing
@@ -63,12 +65,21 @@ export function SkullHero() {
   };
 
   return (
-    <section className="relative flex h-screen min-h-[600px] w-full items-center justify-center overflow-hidden bg-[#EDF1E4] text-[#1F2D24]">
+    <section className="relative flex h-screen min-h-[600px] w-full items-center justify-center overflow-hidden bg-[#072e2b] text-[#eafbf6]">
+      {/* Layer -1: cinematic channel-art gradient (green → teal → deep) */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0"
+        aria-hidden="true"
+        style={{
+          backgroundImage:
+            "radial-gradient(58% 55% at 8% -8%, rgba(155,214,73,0.26), transparent 68%), radial-gradient(62% 52% at 94% 4%, rgba(21,122,130,0.45), transparent 72%), radial-gradient(95% 70% at 50% 128%, rgba(14,143,144,0.32), transparent 72%), linear-gradient(168deg, #0e544c 0%, #082f2c 56%, #041f1e 100%)",
+        }}
+      />
       {/* Top nav */}
       <header className="absolute left-0 top-0 z-50 flex w-full items-center justify-between px-6 py-6 md:px-12">
         <div
           style={{ fontFamily: ZIMULA_BD }}
-          className="flex select-none items-center gap-2.5 text-xl font-black tracking-tighter text-[#1F2D24] md:text-2xl"
+          className="flex select-none items-center gap-2.5 text-xl font-black tracking-tighter text-[#eafbf6] md:text-2xl"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -79,27 +90,46 @@ export function SkullHero() {
           />
           ENCHIRIDION<sup className="ml-0.5 text-[0.4em]">®</sup>
         </div>
-        <Link
-          href="/demo"
-          aria-label="Launch the Enchiridion app"
-          style={{ fontFamily: ZIMULA_BD }}
-          className="group flex items-center gap-2.5 rounded-xl bg-gradient-to-r from-[#2F7D63] to-[#3FA47E] px-5 py-3 text-xs font-black uppercase tracking-widest text-[#F4F7EC] shadow-[0_8px_28px_rgba(47,125,99,0.32)] transition-all duration-200 hover:brightness-105 active:scale-95"
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/enchiridion-logo.png"
-            alt=""
-            aria-hidden="true"
-            className="h-5 w-5 rounded-full object-contain"
-          />
-          <span className="hidden sm:inline">Launch Enchiridion App</span>
-          <span className="sm:hidden">Launch</span>
-          <Rocket
-            size={14}
-            strokeWidth={2.4}
-            className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-          />
-        </Link>
+        <div className="flex items-center gap-2 sm:gap-3">
+          <a
+            href={CHANNEL_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => track(EVENTS.youtubeClick, { placement: "hero_nav" })}
+            aria-label="Watch Enchiridion on YouTube (opens in a new tab)"
+            className="ds-focus group hidden items-center gap-2 rounded-xl border border-[#5eead42e] px-4 py-3 text-xs font-bold uppercase tracking-widest text-[#d7efe9] transition-colors duration-200 hover:border-[#5eead466] hover:text-[#5eead4] sm:flex"
+          >
+            <Youtube size={15} strokeWidth={2.2} />
+            Channel
+          </a>
+          <Link
+            href="/demo"
+            onClick={() =>
+              track(EVENTS.primaryCtaClick, {
+                placement: "hero_nav",
+                label: "launch_app",
+              })
+            }
+            aria-label="Launch the Enchiridion app"
+            style={{ fontFamily: ZIMULA_BD }}
+            className="group flex items-center gap-2.5 rounded-xl bg-gradient-to-r from-[#2e9e6a] to-[#14a6a8] px-5 py-3 text-xs font-black uppercase tracking-widest text-[#F4F7EC] shadow-[0_8px_28px_rgba(20,166,168,0.32)] transition-all duration-200 hover:brightness-105 active:scale-95"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/enchiridion-logo.png"
+              alt=""
+              aria-hidden="true"
+              className="h-5 w-5 rounded-full object-contain"
+            />
+            <span className="hidden sm:inline">Launch Enchiridion App</span>
+            <span className="sm:hidden">Launch</span>
+            <Rocket
+              size={14}
+              strokeWidth={2.4}
+              className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+            />
+          </Link>
+        </div>
       </header>
 
       {/* Layer 0: ambient flora-shadows loop */}
@@ -109,19 +139,29 @@ export function SkullHero() {
         loop
         playsInline
         aria-hidden="true"
-        className="absolute inset-0 z-0 h-full w-full object-cover opacity-25 mix-blend-multiply"
+        className="absolute inset-0 z-0 h-full w-full object-cover opacity-[0.18] mix-blend-screen"
       >
         <source src="/flora-shadows.webm" type="video/webm" />
       </video>
 
-      {/* Layer 1: warm wash + soft vignette */}
-      <div className="pointer-events-none absolute inset-0 z-[1] bg-[rgba(244,247,236,0.35)]" aria-hidden="true" />
+      {/* Layer 1: depth vignette for text legibility (deep teal) */}
       <div
         className="pointer-events-none absolute inset-0 z-[1]"
         aria-hidden="true"
         style={{
           background:
-            "radial-gradient(120% 90% at 50% 38%, transparent 45%, rgba(47,125,99,0.18) 100%)",
+            "radial-gradient(120% 90% at 50% 36%, transparent 42%, rgba(4,28,27,0.55) 100%)",
+        }}
+      />
+
+      {/* Layer 2: luminous brand halo behind the skull (echoes the logo glow) */}
+      <div
+        className="pointer-events-none absolute z-[2] aspect-square w-[78vmin] max-w-[760px] rounded-full"
+        aria-hidden="true"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(45,212,191,0.34) 0%, rgba(32,199,201,0.14) 38%, transparent 70%)",
+          filter: "blur(18px)",
         }}
       />
 
@@ -131,12 +171,15 @@ export function SkullHero() {
         className="pointer-events-none absolute z-[3] text-center"
         aria-hidden="true"
       >
-        <h1
+        {/* Decorative wordmark — not a heading (the document <h1> lives on the
+            page below), so it stays out of the accessibility tree. */}
+        <span
+          role="presentation"
           style={{ fontFamily: ZIMULA_BD }}
-          className="select-none text-[17vw] font-black leading-none tracking-tighter text-[#2F7D63] opacity-25 md:text-[14vw]"
+          className="block select-none text-[17vw] font-black leading-none tracking-tighter text-[#5eead4] opacity-[0.14] md:text-[14vw]"
         >
           ENCHIRIDION
-        </h1>
+        </span>
       </motion.div>
 
       {/* Layer 4: foreground Spinosaurus skull */}
@@ -148,8 +191,11 @@ export function SkullHero() {
         <motion.img
           style={{ y: skullScrollY }}
           src="/spino-skull.png"
-          alt="Spinosaurus mirabilis lateral cranium reconstruction"
-          className="h-auto w-[130vw] max-w-[900px] select-none drop-shadow-[0_35px_60px_rgba(0,0,0,0.55)] md:w-[65vw]"
+          alt="Spinosaurus aegyptiacus lateral cranium reconstruction"
+          fetchPriority="high"
+          decoding="async"
+          draggable={false}
+          className="h-auto w-[130vw] max-w-[900px] select-none [filter:drop-shadow(0_24px_55px_rgba(0,0,0,0.5))_drop-shadow(0_0_42px_rgba(94,234,212,0.28))] md:w-[65vw]"
         />
       </motion.div>
 
@@ -166,24 +212,31 @@ export function SkullHero() {
           animate="show"
           whileHover={prefersReducedMotion ? undefined : { y: -6 }}
           transition={{ type: "spring", stiffness: 300, damping: 24 }}
-          className="group max-w-md rounded-2xl border border-[#2F7D6325] bg-[rgba(252,251,245,0.96)] p-8 shadow-[0_18px_56px_rgba(47,125,99,0.18)] backdrop-blur-md transition-colors duration-200 hover:border-[#2F7D6380]"
+          className="group max-w-md rounded-2xl border border-[#5eead42e] bg-[rgba(9,46,42,0.66)] p-8 shadow-[0_22px_60px_rgba(0,0,0,0.4)] backdrop-blur-md transition-colors duration-200 hover:border-[#5eead466]"
         >
-          <span className="mb-3 block font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-[#2F7D63]">
-            System Module // 01
+          <span className="mb-3 block text-[11px] font-semibold uppercase tracking-[0.18em] text-[#7ee0c9]">
+            A desktop learning OS
           </span>
           <p
             style={{ fontFamily: ZIMULA_MED }}
-            className="text-lg font-medium leading-relaxed text-[#1F2D24] md:text-xl"
+            className="text-lg font-medium leading-relaxed text-[#eafbf6] md:text-xl"
           >
-            Mapping deep-time evolution and morphology variations inside a local
-            vector engine.
+            Learn it well enough to actually make something with it. Tell
+            Enchiridion what you want to build — it writes the curriculum and
+            keeps you showing up until you can do the work yourself.
           </p>
           <Link
-            href="/demo"
+            href="#how-it-works"
+            onClick={() =>
+              track(EVENTS.primaryCtaClick, {
+                placement: "hero_mission",
+                label: "see_how_it_works",
+              })
+            }
             style={{ fontFamily: ZIMULA_MED }}
-            className="ds-focus mt-6 inline-flex items-center gap-2 border-t border-[#1F2D24]/15 pt-4 text-[11px] font-bold uppercase tracking-[0.12em] text-[#1F2D24] transition-colors duration-200 hover:text-[#2F7D63]"
+            className="ds-focus mt-6 inline-flex items-center gap-2 border-t border-[#eafbf61f] pt-4 text-[11px] font-bold uppercase tracking-[0.12em] text-[#eafbf6] transition-colors duration-200 hover:text-[#5eead4]"
           >
-            Enter Active Workspace
+            See how it works
             <ArrowDown size={13} strokeWidth={2.4} className="-rotate-90" />
           </Link>
         </motion.div>
@@ -196,25 +249,32 @@ export function SkullHero() {
           animate="show"
           whileHover={prefersReducedMotion ? undefined : { y: -6 }}
           transition={{ type: "spring", stiffness: 300, damping: 24 }}
-          className="flex flex-col justify-between gap-6 rounded-2xl border border-[#2F7D6325] bg-[rgba(252,251,245,0.96)] p-8 shadow-[0_18px_56px_rgba(47,125,99,0.18)] backdrop-blur-md transition-colors duration-200 hover:border-[#2F7D6380] md:max-w-xs"
+          className="flex flex-col justify-between gap-6 rounded-2xl border border-[#5eead42e] bg-[rgba(9,46,42,0.66)] p-8 shadow-[0_22px_60px_rgba(0,0,0,0.4)] backdrop-blur-md transition-colors duration-200 hover:border-[#5eead466] md:max-w-xs"
         >
           <div>
-            <span className="mb-3 block font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-[#2F7D63]">
-              Hardware-Accelerated
+            <span className="mb-3 block text-[11px] font-semibold uppercase tracking-[0.18em] text-[#7ee0c9]">
+              Free to start
             </span>
             <p
               style={{ fontFamily: ZIMULA_MED }}
-              className="text-base leading-relaxed text-[#1F2D24]/80"
+              className="text-base leading-relaxed text-[#d7efe9]"
             >
-              Stream real reconstructions through a unified WebGL context.
+              Your first Learning Path is free — full depth, no time limit, no
+              card. Enough to prove this works on you.
             </p>
           </div>
           <Link
             href="/demo"
+            onClick={() =>
+              track(EVENTS.primaryCtaClick, {
+                placement: "hero_launch_card",
+                label: "build_first_path",
+              })
+            }
             style={{ fontFamily: ZIMULA_BD }}
-            className="ds-focus w-full rounded-xl bg-gradient-to-r from-[#2F7D63] to-[#3FA47E] px-8 py-4 text-center text-xs font-black uppercase tracking-widest text-[#F4F7EC] shadow-[0_12px_36px_rgba(47,125,99,0.3)] transition-all duration-200 hover:brightness-105 active:scale-[0.98]"
+            className="ds-focus w-full rounded-xl bg-gradient-to-r from-[#2e9e6a] to-[#14a6a8] px-8 py-4 text-center text-xs font-black uppercase tracking-widest text-[#F4F7EC] shadow-[0_12px_36px_rgba(20,166,168,0.3)] transition-all duration-200 hover:brightness-105 active:scale-[0.98]"
           >
-            Launch Engine Terminal
+            Build my first path
           </Link>
         </motion.div>
       </motion.div>
@@ -222,7 +282,7 @@ export function SkullHero() {
       {/* Scroll cue — there's more below */}
       <motion.div
         style={{ opacity: opacityFade }}
-        className="pointer-events-none absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-1 text-[#2F7D63]"
+        className="pointer-events-none absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-1 text-[#5eead4]"
         aria-hidden="true"
       >
         <span className="text-[10px] font-bold uppercase tracking-[0.2em]">
